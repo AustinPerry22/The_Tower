@@ -3,6 +3,8 @@ import { BadRequest } from "../utils/Errors.js"
 
 class EventsService {
 
+
+
     async getEvents() {
         const events = await dbContext.Events.find().populate('creator ticketCount')
         return events
@@ -19,7 +21,8 @@ class EventsService {
 
     async editEvent(eventId, eventBody) {
         const foundEvent = await this.getEventsById(eventId)
-        if (!foundEvent) throw new BadRequest(`There is no event with an id of ${eventId}`)
+        if (!foundEvent) throw new BadRequest(`There is no event to edit with an id of ${eventId}`)
+        if (foundEvent.isCanceled) throw new BadRequest('The event is canceled')
         foundEvent.name = eventBody.name || foundEvent.name
         foundEvent.description = eventBody.description || foundEvent.description
         foundEvent.coverImg = eventBody.coverImg || foundEvent.coverImg
@@ -32,6 +35,15 @@ class EventsService {
         await foundEvent.save()
         return foundEvent
     }
+
+    async cancelEvent(eventId) {
+        const foundEvent = await this.getEventsById(eventId)
+        if (!foundEvent) throw new BadRequest(`There is no event to cancel with an id of ${eventId}`)
+        foundEvent.isCanceled = true
+        await foundEvent.save()
+        return foundEvent
+    }
+
 
 }
 
