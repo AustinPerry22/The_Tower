@@ -2,6 +2,7 @@ import { Auth0Provider } from "@bcwdev/auth0provider";
 import BaseController from "../utils/BaseController.js";
 import { eventsService } from "../services/EventsService.js";
 import { ticketsService } from "../services/TicketsService.js";
+import { commentsService } from "../services/CommentsService.js";
 
 export class EventsController extends BaseController {
     constructor() {
@@ -10,6 +11,7 @@ export class EventsController extends BaseController {
             .get('', this.getEvents)
             .get('/:eventId', this.getEventById)
             .get('/:eventId/tickets', this.getEventTickets)
+            .get('/:eventId/comments', this.getEventComments)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createEvent)
             .put('/:eventId', this.editEvent)
@@ -42,6 +44,15 @@ export class EventsController extends BaseController {
             next(error)
         }
     }
+
+    async getEventComments(req, res, next) {
+        try {
+            const comments = await commentsService.getEventComments(req.params.eventId)
+            res.send(comments)
+        } catch (error) {
+            next(error)
+        }
+    }
     async createEvent(req, res, next) {
         try {
             let eventBody = req.body
@@ -57,7 +68,7 @@ export class EventsController extends BaseController {
         try {
             let eventBody = req.body
             eventBody.creatorId = req.userInfo.eventId
-            const updatedEvent = await eventsService.editEvent(req.params.eventId, eventBody)
+            const updatedEvent = await eventsService.editEvent(req.params.eventId, eventBody, req.userInfo.id)
             res.send(updatedEvent)
         } catch (error) {
             next(error)
@@ -66,7 +77,7 @@ export class EventsController extends BaseController {
 
     async cancelEvent(req, res, next) {
         try {
-            const deletedEvent = await eventsService.cancelEvent(req.params.eventId)
+            const deletedEvent = await eventsService.cancelEvent(req.params.eventId, req.userInfo.id)
             res.send(deletedEvent)
         } catch (error) {
             next(error)

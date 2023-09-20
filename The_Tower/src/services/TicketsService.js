@@ -1,4 +1,5 @@
 import { dbContext } from "../db/DbContext.js"
+import { Forbidden } from "../utils/Errors.js"
 
 class TicketsService {
 
@@ -16,8 +17,9 @@ class TicketsService {
         return ticket
     }
 
-    async deleteTicket(ticketId) {
+    async deleteTicket(ticketId, accountId) {
         const ticketToDelete = await dbContext.Tickets.findById(ticketId)
+        if (ticketToDelete.accountId != accountId) throw new Forbidden('this is not your ticket')
         await ticketToDelete.delete()
         return 'deleted'
     }

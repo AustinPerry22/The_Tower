@@ -1,5 +1,5 @@
 import { dbContext } from "../db/DbContext.js"
-import { BadRequest } from "../utils/Errors.js"
+import { BadRequest, Forbidden } from "../utils/Errors.js"
 
 class EventsService {
 
@@ -19,9 +19,10 @@ class EventsService {
         return event
     }
 
-    async editEvent(eventId, eventBody) {
+    async editEvent(eventId, eventBody, accountId) {
         const foundEvent = await this.getEventsById(eventId)
         if (!foundEvent) throw new BadRequest(`There is no event to edit with an id of ${eventId}`)
+        if (foundEvent.creatorId != accountId) throw new Forbidden('This is not your event')
         if (foundEvent.isCanceled) throw new BadRequest('The event is canceled')
         foundEvent.name = eventBody.name || foundEvent.name
         foundEvent.description = eventBody.description || foundEvent.description
@@ -36,9 +37,10 @@ class EventsService {
         return foundEvent
     }
 
-    async cancelEvent(eventId) {
+    async cancelEvent(eventId, accountId) {
         const foundEvent = await this.getEventsById(eventId)
         if (!foundEvent) throw new BadRequest(`There is no event to cancel with an id of ${eventId}`)
+        if (foundEvent.creatorId != accountId) throw new Forbidden('This is not your event')
         foundEvent.isCanceled = true
         await foundEvent.save()
         return foundEvent
