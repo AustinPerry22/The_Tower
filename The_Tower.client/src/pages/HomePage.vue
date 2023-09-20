@@ -10,8 +10,8 @@
     navbar component
   </section>
   <section class="row justify-content-evenly">
-    <div v-for="event in events" :key="event.id" class="col-3 event-card">
-      event
+    <div v-for="event in events" :key="event.id" class="col-3 g-4  event-card">
+      <EventCard :event="event"/>
     </div>
   </section>
 </template>
@@ -19,7 +19,8 @@
 <script>
 import { computed, onMounted } from 'vue';
 import { AppState } from '../AppState';
-import {eventsService} from '../services/EventsService'
+import {eventsService} from '../services/EventsService';
+import EventCard from '../components/EventCard.vue'
 import Pop from '../utils/Pop';
 
 export default {
@@ -35,7 +36,8 @@ export default {
     return {
       events: computed(()=>AppState.events)
     }
-  }
+  },
+  components:{EventCard}
 }
 </script>
 
@@ -53,7 +55,7 @@ export default {
 }
 
 .event-card{
-  border: .5rem black solid .15em;
+  border: .5rem rgb(32, 6, 75) solid .15em;
 }
 
 </style>
