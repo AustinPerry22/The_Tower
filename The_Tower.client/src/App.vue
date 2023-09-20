@@ -1,19 +1,22 @@
 <template>
-  <header>
-    <Navbar />
-  </header>
-  <main>
-    <router-view />
+  <main class="container-fluid bg-dark">
+    <h1>Tower</h1>
+    <section class="row">
+      <div class="col-11">
+        <router-view />
+      </div>
+      <div class="col-1 bg-primary-subtle">
+        <Login/>
+      </div>
+    </section>
   </main>
-   <footer class="bg-dark text-light">
-    Made with hate by grandma's
-  </footer>
 </template>
 
 <script>
 import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
+import Login from './components/Login.vue'
 
 export default {
   setup() {
@@ -21,7 +24,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar }
+  components: { Navbar, Login }
 }
 </script>
 <style lang="scss">
@@ -31,7 +34,9 @@ export default {
   --main-height: calc(100vh - 32px - 64px);
 }
 
-
+.background-color{
+  background-color: #2A2D3A;
+}
 footer {
   display: grid;
   place-content: center;
