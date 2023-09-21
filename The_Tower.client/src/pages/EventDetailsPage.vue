@@ -31,7 +31,7 @@
             <h5 class="text-danger">event is canceled!</h5>
           </div>
           <div v-if="canAttend" class="col-6 text-end">
-              <button class="btn btn-info">
+              <button @click="createAttendee" class="btn btn-info">
                 Attend
               </button>
             </div>
@@ -63,6 +63,7 @@ import {attendeesService} from '../services/AttendeesService'
 import CommentForm from '../components/CommentForm.vue';
 import CommentCard from '../components/CommentCard.vue'
 import { commentsService } from '../services/CommentsService';
+import { logger } from '../utils/Logger';
 
 export default {
     setup() {
@@ -106,15 +107,18 @@ export default {
             spotsLeft: computed(() => AppState.activeEvent.capacity - AppState.activeEvent.ticketCount),
             user: computed(() => AppState.user),
             canAttend: computed(() => {
-                if (!AppState.user.isAuthenticated)
-                    return false;
-                if (AppState.activeEvent.isCanceled)
-                    return false;
-                if ((AppState.activeEvent.capacity - AppState.activeEvent.ticketCount) <= 0)
-                    return false;
-                // TODO return false if i have a ticket with this eventId
-                return true;
+                if (!AppState.user.isAuthenticated) return false;
+                if (AppState.activeEvent.isCanceled) return false;
+                if ((AppState.activeEvent.capacity - AppState.activeEvent.ticketCount) <= 0) return false;
+                let noTicket = true;
+                AppState.attendees.forEach(attendee=>{
+                  if(attendee.eventId == AppState.activeEvent.id) {
+                    noTicket = false
+                  }
+                })
+                return noTicket;
             }),
+
             attendees: computed(() => AppState.attendees),
             comments: computed(()=> AppState.comments),
             async cancelEvent() {
@@ -127,6 +131,14 @@ export default {
                 catch (error) {
                     Pop.error(error);
                 }
+            },
+
+            async createAttendee(){
+              try {
+                await attendeesService.createAttendee({eventId: this.activeEvent.id})
+              } catch (error) {
+                Pop.error(error)
+              }
             }
         };
     },
