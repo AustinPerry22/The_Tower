@@ -44,9 +44,9 @@
         <img :src="attendee.profile.picture" :alt="attendee.profile.name" :title="attendee.profile.name" class="profile-pic">
       </div>
     </section>
-    <section v-if="user.isAuthenticated && activeEvent.id" class="row justify-content-center">
+    <section class="row justify-content-center">
       <!-- TODO add comment form and comments underneath here -->
-      <CommentForm :eventId="activeEvent.id"/>
+      <CommentForm v-if="user.isAuthenticated && activeEvent.id" :eventId="activeEvent.id"/>
       <div v-for="comment in comments" :key="comment.id" class="col-10 my-2">
         <CommentCard :comment="comment"/>
       </div>
