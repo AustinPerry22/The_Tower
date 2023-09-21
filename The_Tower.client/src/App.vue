@@ -1,12 +1,12 @@
 <template>
   <main class="container-fluid bg-dark">
-    <h1>Tower</h1>
     <section class="row">
       <div class="col-11">
+        <h1>Tower</h1>
         <router-view />
       </div>
       <div class="col-1 bg-primary-subtle">
-        <Login/>
+        <Navigation/>
       </div>
     </section>
   </main>
@@ -15,7 +15,7 @@
 <script>
 import { computed } from 'vue'
 import { AppState } from './AppState'
-import Login from './components/Login.vue'
+import Navigation from './components/Navigation.vue'
 
 export default {
   setup() {
@@ -23,7 +23,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Login }
+  components:{ Navigation}
 }
 </script>
 <style lang="scss">
