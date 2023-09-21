@@ -1,23 +1,31 @@
 <template>
   <section class="row justify-content-center">
-    <div class="col-11 justify-content-center" id="top-card">
-      <h3>Lorem ipsum dolor sit amet.</h3>
-      <h3>Lorem ipsum dolor sit amet, consectetur adipisicing.</h3>
-      <h3>Lorem ipsum dolor sit.</h3>
-    </div>
-  </section>
-  <section class="row">
-    navbar component
-  </section>
-  <section class="row justify-content-evenly">
-    <div v-for="event in events" :key="event.id" class="col-3 g-4  event-card">
-      <EventCard :event="event"/>
+    <div class="col-11">
+      <section class="row justify-content-center">
+        <div class="col-12 justify-content-center" id="top-card">
+          <h3>Lorem ipsum dolor sit amet.</h3>
+          <h3>Lorem ipsum dolor sit amet, consectetur adipisicing.</h3>
+          <h3>Lorem ipsum dolor sit.</h3>
+        </div>
+      </section>
+      <section class="row text-center bg-primary mt-4 justify-content-evenly">
+        <button @click="eventType=''" class="btn btn-dark col-2">All</button>
+        <button @click="eventType='convention'" class="btn btn-dark col-2">Conventions</button>
+        <button @click="eventType='sport'" class="btn btn-dark col-2">Sports</button>
+        <button @click="eventType='digital'" class="btn btn-dark col-2">Digital</button>
+        <button @click="eventType='concert'" class="btn btn-dark col-2">Concerts</button>
+      </section>
+      <section class="row justify-content-evenly">
+        <div v-for="event in events" :key="event.id" class="col-3 g-4  event-card">
+          <EventCard :event="event"/>
+        </div>
+      </section>
     </div>
   </section>
 </template>
 
 <script>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState';
 import {eventsService} from '../services/EventsService';
 import EventCard from '../components/EventCard.vue'
@@ -25,6 +33,7 @@ import Pop from '../utils/Pop';
 
 export default {
   setup() {
+    const eventType = ref('')
     onMounted(()=>getEvents())
     async function getEvents(){
       try {
@@ -34,10 +43,17 @@ export default {
       }
     }
     return {
-      events: computed(()=>AppState.events)
+      eventType,
+      events: computed(()=>{
+        if(!eventType.value){
+          return AppState.events
+        }else{
+          return AppState.events.filter(event => event.type == eventType.value)
+        }
+      })
     }
   },
-  components:{EventCard}
+  components:{ EventCard}
 }
 </script>
 

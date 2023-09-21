@@ -1,14 +1,26 @@
 <template>
     <section class="row justify-content-center">
         <div class="col-11 p-0 event-cover d-flex align-items-end">
-           <div class="info px-3">
+           <div class="info px-2">
             <h5>{{ event.name }}</h5>
             <h6>{{ event.location }}</h6>
             <section class="row"></section>
             <h6>{{ event.startDate }}</h6>
-            <section class="row justify-content-end">
-                <h6 class="text-end">{{ event.ticketCount }} spots left</h6>
+            <section v-if="event.isCanceled" class="row px-1">
+                <div class="col-12 rounded-top-2 bg-danger text-end">
+                    <h6>Event Cancelled</h6>
+                </div>
             </section>
+            <div v-else>
+                <section v-if="event.ticketCount > 0" class="row justify-content-end">
+                    <h6 class="text-end text-success">{{ event.ticketCount }} spots left</h6>
+                </section>
+                <section v-else class="row px-1">
+                    <div class="col-12 rounded-top-2 bg-danger text-end">
+                        <h6>Sold Out!</h6>
+                    </div>
+            </section>
+            </div>
            </div>
         </div>
     </section>

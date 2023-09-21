@@ -15,7 +15,6 @@
 <script>
 import { computed } from 'vue'
 import { AppState } from './AppState'
-import Navbar from './components/Navbar.vue'
 import Login from './components/Login.vue'
 
 export default {
@@ -24,7 +23,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar, Login }
+  components: { Login }
 }
 </script>
 <style lang="scss">
