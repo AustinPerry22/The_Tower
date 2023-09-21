@@ -8,6 +8,11 @@ class EventsService{
         AppState.events = res.data.map(event => new Event(event))
     }
 
+    async getMyEvents(){
+        await this.getEvents()
+        AppState.myEvents = AppState.events.filter(singleEvent => singleEvent.creatorId == AppState.account.id)
+    }
+
     async getEvent(eventId){
         const res = await api.get(`api/events/${eventId}`)
         AppState.activeEvent = new Event(res.data)

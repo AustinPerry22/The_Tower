@@ -9,6 +9,11 @@ class AttendeesService{
         AppState.attendees = res.data.map(attendee => new Attendee(attendee))
     }
 
+    async getMyTickets(){
+        const res = await api.get(`account/tickets`)
+        AppState.myAttendees = res.data.map(attendee => new Attendee(attendee))
+    }
+
     async createAttendee(body){
         const res = await api.post('api/tickets', body)
         const newAttendee = new Attendee(res.data)
