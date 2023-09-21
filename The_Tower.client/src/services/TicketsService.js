@@ -4,13 +4,27 @@ import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
 
 class TicketsService{
+
+    async getTickets(eventId){
+        const res = await api.get(`api/events/${eventId}/tickets`)
+        AppState.tickets = res.data.map(ticket => new Ticket(ticket))
+    }
+
+    async getMyTickets(){
+        const res = await api.get(`account/tickets`)
+        AppState.myTickets = res.data.map(ticket => new Ticket(ticket))
+    }
+
     async createTicket(body){
         const res = await api.post('api/tickets', body)
-        logger.log(res.data)
         const newTicket = new Ticket(res.data)
-        logger.log(newTicket)
         AppState.tickets.unshift(newTicket)
-        logger.log(AppState.tickets)
+    }
+
+    async deleteTicket(ticketId){
+        await api.delete(`api/tickets/${ticketId}`)
+        const ticketToRemove = AppState.myTickets.findIndex(ticket=> ticket.id == ticketId)
+        AppState.myTickets.splice(ticketToRemove, 1)
     }
 }
 

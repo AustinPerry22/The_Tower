@@ -31,7 +31,7 @@
             <h5 class="text-danger">event is canceled!</h5>
           </div>
           <div v-if="canAttend" class="col-6 text-end">
-              <button @click="createAttendee" class="btn btn-info">
+              <button @click="createTicket" class="btn btn-info">
                 Attend
               </button>
             </div>
@@ -40,8 +40,8 @@
     </section>
     <h5>See who's Attending</h5>
     <section class="row bg-dark-subtle">
-      <div v-for="attendee in attendees" :key="attendee.id">
-        <img :src="attendee.profile.picture" :alt="attendee.profile.name" :title="attendee.profile.name" class="profile-pic">
+      <div v-for="ticket in tickets" :key="ticket.id">
+        <img :src="ticket.profile.picture" :alt="ticket.profile.name" :title="ticket.profile.name" class="profile-pic">
       </div>
     </section>
     <section class="row justify-content-center">
@@ -59,11 +59,10 @@ import { AppState } from '../AppState';
 import { useRoute } from 'vue-router';
 import Pop from '../utils/Pop';
 import { eventsService } from '../services/EventsService';
-import {attendeesService} from '../services/AttendeesService'
 import CommentForm from '../components/CommentForm.vue';
 import CommentCard from '../components/CommentCard.vue'
 import { commentsService } from '../services/CommentsService';
-import { logger } from '../utils/Logger';
+import { ticketsService } from '../services/TicketsService';
 
 export default {
     setup() {
@@ -71,7 +70,7 @@ export default {
         watchEffect(() => {
             route.params.eventId;
             getEvent();
-            getAttendees();
+            getTickets();
             getComments();
         });
         async function getEvent() {
@@ -83,10 +82,10 @@ export default {
                 Pop.error(error);
             }
         }
-        async function getAttendees() {
+        async function getTickets() {
             try {
-                AppState.attendees = [];
-                await attendeesService.getAttendees(route.params.eventId);
+                AppState.tickets = [];
+                await ticketsService.getTickets(route.params.eventId);
             }
             catch (error) {
                 Pop.error(error);
@@ -111,15 +110,15 @@ export default {
                 if (AppState.activeEvent.isCanceled) return false;
                 if ((AppState.activeEvent.capacity - AppState.activeEvent.ticketCount) <= 0) return false;
                 let noTicket = true;
-                AppState.attendees.forEach(attendee=>{
-                  if(attendee.eventId == AppState.activeEvent.id) {
+                AppState.tickets.forEach(ticket=>{
+                  if(ticket.eventId == AppState.activeEvent.id) {
                     noTicket = false
                   }
                 })
                 return noTicket;
             }),
 
-            attendees: computed(() => AppState.attendees),
+            tickets: computed(() => AppState.tickets),
             comments: computed(()=> AppState.comments),
             async cancelEvent() {
                 try {
@@ -133,9 +132,9 @@ export default {
                 }
             },
 
-            async createAttendee(){
+            async createTicket(){
               try {
-                await attendeesService.createAttendee({eventId: this.activeEvent.id})
+                await ticketsService.createTicket({eventId: this.activeEvent.id})
               } catch (error) {
                 Pop.error(error)
               }
