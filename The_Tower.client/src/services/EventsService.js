@@ -9,8 +9,11 @@ class EventsService{
     }
 
     async getMyEvents(){
-        await this.getEvents()
-        AppState.myEvents = AppState.events.filter(singleEvent => singleEvent.creatorId == AppState.account.id)
+        logger.log('getting events')
+        const res = await api.get('api/events')
+        const allEvents = res.data.map(event => new Event(event))
+        AppState.myEvents = allEvents.filter(singleEvent => singleEvent.creatorId == AppState.account.id)
+        logger.log(AppState.myEvents)
     }
 
     async getEvent(eventId){
