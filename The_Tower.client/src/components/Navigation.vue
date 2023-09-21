@@ -12,7 +12,7 @@
                 <h3 class="text-dark">creating Event</h3>
             </template>
             <template #body>
-                <EventForm/>
+                <EventForm :editing="false"/>
             </template>
         </ModalWrapper>
     </section>

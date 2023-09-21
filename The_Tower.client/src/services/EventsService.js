@@ -18,7 +18,14 @@ class EventsService{
         const newEvent = new Event(res.data)
         AppState.events.push(newEvent)
         return newEvent
-        
+    }
+
+    async editEvent(eventId, eventData){
+        const res = await api.put(`api/events/${eventId}`, eventData)
+        const editedEvent = new Event(res.data)
+        const eventIndex = AppState.events.findIndex(event => event.id == editedEvent.id)
+        AppState.events.splice(eventIndex, 1, editedEvent)
+        AppState.activeEvent = editedEvent
     }
 }
 
