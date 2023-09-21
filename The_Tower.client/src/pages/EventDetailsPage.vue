@@ -44,8 +44,9 @@
         <img :src="attendee.profile.picture" :alt="attendee.profile.name" :title="attendee.profile.name" class="profile-pic">
       </div>
     </section>
-    <section class="row">
+    <section v-if="user.isAuthenticated" class="row justify-content-center">
       <!-- TODO add comment form and comments underneath here -->
+      <CommentForm :eventId="activeEvent.id"/>
     </section>
 </template>
 
@@ -56,62 +57,65 @@ import { useRoute } from 'vue-router';
 import Pop from '../utils/Pop';
 import { eventsService } from '../services/EventsService';
 import {attendeesService} from '../services/AttendeesService'
+import CommentForm from '../components/CommentForm.vue';
 
 export default {
-setup() {
-  const route = useRoute();
-  watchEffect(()=>{
-    route.params.eventId
-    getEvent()
-    getAttendees()
-  // get comments
-})
-async function getEvent(){
-  try {
-    AppState.activeEvent = {}
-    await eventsService.getEvent(route.params.eventId)
-  } catch (error) {
-    Pop.error(error)
-  }
-}
-
-async function getAttendees(){
-  try {
-    AppState.attendees = []
-    await attendeesService.getAttendees(route.params.eventId)
-  } catch (error) {
-    Pop.error(error)
-  }
-}
-  return {
-    activeEvent: computed(()=> AppState.activeEvent),
-    accountId: computed(()=> AppState.account.id),
-    spotsLeft: computed(()=> AppState.activeEvent.capacity - AppState.activeEvent.ticketCount),
-    user: computed(()=> AppState.user),
-    canAttend: computed(()=>{
-      if (!AppState.user.isAuthenticated) return false
-      if (AppState.activeEvent.isCanceled) return false
-      if ((AppState.activeEvent.capacity - AppState.activeEvent.ticketCount) <= 0) return false
-      // TODO return false if i have a ticket with this eventId
-      return true
-    }),
-    attendees: computed(()=> AppState.attendees),
-
-    async cancelEvent(){
-      try {
-        if(await Pop.confirm('are you sure you want to cancel the event?')){
-          await eventsService.cancelEvent(this.activeEvent.id)
-          Pop.success('canceled the event')
+    setup() {
+        const route = useRoute();
+        watchEffect(() => {
+            route.params.eventId;
+            getEvent();
+            getAttendees();
+            // get comments
+        });
+        async function getEvent() {
+            try {
+                AppState.activeEvent = {};
+                await eventsService.getEvent(route.params.eventId);
+            }
+            catch (error) {
+                Pop.error(error);
+            }
         }
-      } catch (error) {
-        Pop.error(error)
-      }
-
-      
-    }
-    
-  };
-},
+        async function getAttendees() {
+            try {
+                AppState.attendees = [];
+                await attendeesService.getAttendees(route.params.eventId);
+            }
+            catch (error) {
+                Pop.error(error);
+            }
+        }
+        return {
+            activeEvent: computed(() => AppState.activeEvent),
+            accountId: computed(() => AppState.account.id),
+            spotsLeft: computed(() => AppState.activeEvent.capacity - AppState.activeEvent.ticketCount),
+            user: computed(() => AppState.user),
+            canAttend: computed(() => {
+                if (!AppState.user.isAuthenticated)
+                    return false;
+                if (AppState.activeEvent.isCanceled)
+                    return false;
+                if ((AppState.activeEvent.capacity - AppState.activeEvent.ticketCount) <= 0)
+                    return false;
+                // TODO return false if i have a ticket with this eventId
+                return true;
+            }),
+            attendees: computed(() => AppState.attendees),
+            async cancelEvent() {
+                try {
+                    if (await Pop.confirm('are you sure you want to cancel the event?')) {
+                        await eventsService.cancelEvent(this.activeEvent.id);
+                        Pop.success('canceled the event');
+                    }
+                }
+                catch (error) {
+                    Pop.error(error);
+                }
+            }
+        };
+    },
+    components: { CommentForm }
 };
 </script>
 
