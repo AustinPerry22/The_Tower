@@ -4,7 +4,7 @@
         <img :src="activeEvent.coverImg" :alt="activeEvent.name" class="img-fluid">
       </div>
       <div class="col-8">
-        <section v-if="activeEvent.creatorId == accountId" class="row justify-content-end">
+        <section v-if="(activeEvent.creatorId == accountId) && !activeEvent.isCanceled" class="row justify-content-end">
           <ModalWrapper id="edit-Event">
             <template #button>
               <div>Edit Event</div>
@@ -17,7 +17,7 @@
             </template>
         </ModalWrapper>
           
-          <button class="btn btn-danger col-3">Cancel Event</button>
+          <button @click="cancelEvent" class="btn btn-danger col-3">Cancel Event</button>
         </section>
         <h4>{{ activeEvent.name }}</h4>
         <h6>{{ activeEvent.location }}</h6>
@@ -95,7 +95,20 @@ async function getAttendees(){
       // TODO return false if i have a ticket with this eventId
       return true
     }),
-    attendees: computed(()=> AppState.attendees)
+    attendees: computed(()=> AppState.attendees),
+
+    async cancelEvent(){
+      try {
+        if(await Pop.confirm('are you sure you want to cancel the event?')){
+          await eventsService.cancelEvent(this.activeEvent.id)
+          Pop.success('canceled the event')
+        }
+      } catch (error) {
+        Pop.error(error)
+      }
+
+      
+    }
     
   };
 },
