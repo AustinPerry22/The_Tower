@@ -9,4 +9,9 @@ export const AppState = reactive({
 
   /**@type {Event[]} */
   events: [],
+
+  /**@type {Event} */
+  activeEvent: {},
+
+
 })
