@@ -1,6 +1,6 @@
 <template>
     <section class="row justify-content-center">
-        <div class="col-11 p-0 event-cover d-flex align-items-end">
+        <div @click="openDetails" class="col-11 p-0 event-cover d-flex align-items-end selectable">
            <div class="info px-2">
             <h5>{{ event.name }}</h5>
             <h6>{{ event.location }}</h6>
@@ -29,12 +29,17 @@
 <script>
 import { computed } from 'vue';
 import { Event } from '../models/Event';
+import { router } from '../router';
 
 export default {
 props: {event: {type: Event, required: true}},
 setup(props) {
   return {
     eventImg: computed(()=> `url('${props.event.coverImg}')`),
+
+    openDetails(){
+        router.push({ name: 'EventDetails', params: { eventId: props.event.id } })
+    }
   };
 },
 };
