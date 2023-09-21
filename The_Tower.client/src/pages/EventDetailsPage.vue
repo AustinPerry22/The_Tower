@@ -44,20 +44,25 @@
         <img :src="attendee.profile.picture" :alt="attendee.profile.name" :title="attendee.profile.name" class="profile-pic">
       </div>
     </section>
-    <section v-if="user.isAuthenticated" class="row justify-content-center">
+    <section v-if="user.isAuthenticated && activeEvent.id" class="row justify-content-center">
       <!-- TODO add comment form and comments underneath here -->
       <CommentForm :eventId="activeEvent.id"/>
+      <div v-for="comment in comments" :key="comment.id" class="col-10 my-2">
+        <CommentCard :comment="comment"/>
+      </div>
     </section>
 </template>
 
 <script>
-import { computed, onMounted, watchEffect } from 'vue';
+import {computed, watchEffect } from 'vue';
 import { AppState } from '../AppState';
 import { useRoute } from 'vue-router';
 import Pop from '../utils/Pop';
 import { eventsService } from '../services/EventsService';
 import {attendeesService} from '../services/AttendeesService'
 import CommentForm from '../components/CommentForm.vue';
+import CommentCard from '../components/CommentCard.vue'
+import { commentsService } from '../services/CommentsService';
 
 export default {
     setup() {
@@ -66,7 +71,7 @@ export default {
             route.params.eventId;
             getEvent();
             getAttendees();
-            // get comments
+            getComments();
         });
         async function getEvent() {
             try {
@@ -86,6 +91,15 @@ export default {
                 Pop.error(error);
             }
         }
+
+        async function getComments(){
+          try {
+            AppState.comments = [];
+            await commentsService.getComments(route.params.eventId)
+          } catch (error) {
+            Pop.error(error)
+          }
+        }
         return {
             activeEvent: computed(() => AppState.activeEvent),
             accountId: computed(() => AppState.account.id),
@@ -102,6 +116,7 @@ export default {
                 return true;
             }),
             attendees: computed(() => AppState.attendees),
+            comments: computed(()=> AppState.comments),
             async cancelEvent() {
                 try {
                     if (await Pop.confirm('are you sure you want to cancel the event?')) {
@@ -115,7 +130,7 @@ export default {
             }
         };
     },
-    components: { CommentForm }
+    components: { CommentForm, CommentCard }
 };
 </script>
 
