@@ -45,7 +45,6 @@
       </div>
     </section>
     <section class="row justify-content-center">
-      <!-- TODO add comment form and comments underneath here -->
       <CommentForm v-if="user.isAuthenticated && activeEvent.id" :eventId="activeEvent.id"/>
       <div v-for="comment in comments" :key="comment.id" class="col-10 my-2">
         <CommentCard :comment="comment"/>
@@ -110,7 +109,7 @@ export default {
                 if (AppState.activeEvent.isCanceled) return false;
                 if ((AppState.activeEvent.capacity - AppState.activeEvent.ticketCount) <= 0) return false;
                 let noTicket = true;
-                AppState.tickets.forEach(ticket=>{
+                AppState.myTickets.forEach(ticket=>{
                   if(ticket.eventId == AppState.activeEvent.id) {
                     noTicket = false
                   }
