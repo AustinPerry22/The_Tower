@@ -66,4 +66,11 @@ setup(props) {
     border-top-right-radius: .5rem;
     width: 100%;
 }
+h5,
+h6{
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 </style>

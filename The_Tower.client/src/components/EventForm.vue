@@ -4,15 +4,15 @@
             <label for="title">Title:</label>
             <input v-model="eventData.name" type="text" name="title" class="form-control" maxlength="50" :required="!editing">
             <label for="description">Description:</label>
-            <input v-model="eventData.description" type="text" name="description" class="form-control" maxlength="1500" :required="!editing">
+            <input v-model="eventData.description" type="text" name="description" class="form-control" maxlength="1000" :required="!editing">
             <label for="coverImg">Cover Image Url:</label>
-            <input v-model="eventData.coverImg" type="url" name="coverImg" class="form-control" maxlength="1500">
+            <input v-model="eventData.coverImg" type="url" name="coverImg" class="form-control" maxlength="1000">
             <label for="location">Location:</label>
             <input v-model="eventData.location" type="text" name="location" class="form-control" maxlength="100">
             <label for="capacity">Capacity:</label>
             <input v-model="eventData.capacity" type="number" name="capacity" class="form-control" max="999999999">
             <label for="startDate">Date:</label>
-            <input v-model="eventData.startDate" type="date" name="startDate" class="form-control" maxlength="1500" :required="!editing">
+            <input v-model="eventData.startDate" type="date" name="startDate" class="form-control" :required="!editing">
             <label for="type">type:</label>
             <select v-model="eventData.type" class="form-control" :required="!editing">
                 <option value="concert">concert</option>
