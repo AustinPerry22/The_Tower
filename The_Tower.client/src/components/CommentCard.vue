@@ -1,7 +1,7 @@
 <template>
     <section class="row bg-primary-subtle text-dark rounded-3 elevation-5">
         <div class=" col-12 col-md-3 d-flex align-items-center">
-            <img :src="comment.creator.picture" alt="comment.creator.name">
+            <img :src="comment.creator.picture" :alt="comment.creator.name" :title="comment.creator.name">
             <h6>{{ comment.creator.name }}</h6>
         </div>
         <div class="col-12 col-md-9">
@@ -47,5 +47,9 @@ setup(props) {
 img{
     height: 7.5vh;
   border-radius: 5rem;
+}
+h6{
+    overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

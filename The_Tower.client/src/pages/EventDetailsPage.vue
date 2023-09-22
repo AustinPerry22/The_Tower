@@ -40,8 +40,9 @@
     </section>
     <h5 class="mt-3 text-center">Attendee's</h5>
     <section class="row bg-dark-subtle">
-      <div v-for="ticket in tickets" :key="ticket.id" class="col-2 col-md-1">
+      <div v-for="ticket in tickets" :key="ticket.id" class="col-6 col-md-3 d-flex">
         <img :src="ticket.profile.picture" :alt="ticket.profile.name" :title="ticket.profile.name" class="profile-pic">
+        <p>{{ ticket.profile.name }}</p>
       </div>
     </section>
     <section class="row justify-content-center">
@@ -151,5 +152,9 @@ export default {
 .profile-pic{
   height: 7.5vh;
   border-radius: 5rem;
+}
+p{
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
