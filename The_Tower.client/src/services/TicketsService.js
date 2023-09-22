@@ -19,6 +19,7 @@ class TicketsService{
         const res = await api.post('api/tickets', body)
         const newTicket = new Ticket(res.data)
         AppState.tickets.unshift(newTicket)
+        AppState.activeEvent.ticketCount++
     }
 
     async deleteTicket(ticketId){
