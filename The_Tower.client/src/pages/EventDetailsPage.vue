@@ -40,7 +40,7 @@
     </section>
     <h5>See who's Attending</h5>
     <section class="row bg-dark-subtle">
-      <div v-for="ticket in tickets" :key="ticket.id">
+      <div v-for="ticket in tickets" :key="ticket.id" class="col-1">
         <img :src="ticket.profile.picture" :alt="ticket.profile.name" :title="ticket.profile.name" class="profile-pic">
       </div>
     </section>
