@@ -1,7 +1,6 @@
 import { AppState } from "../AppState"
 import { Event } from "../models/Event"
 import { api } from "./AxiosService"
-import {logger} from "../utils/Logger"
 class EventsService{
     async getEvents(){
         const res = await api.get('api/events')
@@ -9,11 +8,9 @@ class EventsService{
     }
 
     async getMyEvents(){
-        logger.log('getting events')
         const res = await api.get('api/events')
         const allEvents = res.data.map(event => new Event(event))
         AppState.myEvents = allEvents.filter(singleEvent => singleEvent.creatorId == AppState.account.id)
-        logger.log(AppState.myEvents)
     }
 
     async getEvent(eventId){
