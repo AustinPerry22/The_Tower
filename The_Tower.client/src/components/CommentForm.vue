@@ -22,6 +22,8 @@ setup(props) {
             formData.value.eventId = AppState.activeEvent.id
             // TODO isAttending bool change here
             await commentsService.createComment(formData.value)
+            formData.value = {}
+            Pop.success('Created Comment')
         } catch (error) {
             Pop.error(error)
         }
