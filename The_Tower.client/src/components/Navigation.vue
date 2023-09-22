@@ -1,29 +1,3 @@
-<!-- <template>
-    <section class="row">
-        <Login/>
-        <router-link :to="{name: 'Home'}">
-            <h1>Tower</h1>
-        </router-link>
-        
-    </section>
-</template>
-
-<script>
-import { computed } from 'vue';
-import Login from './Login.vue';
-import ModalWrapper from './ModalWrapper.vue';
-import { AppState } from '../AppState';
-import EventForm from './EventForm.vue';
-
-export default {
-    setup() {
-        return {
-            user: computed(()=> AppState.user)
-        };
-    },
-    components: { Login, ModalWrapper, EventForm }
-};
-</script> -->
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">

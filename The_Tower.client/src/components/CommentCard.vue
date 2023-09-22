@@ -1,10 +1,10 @@
 <template>
     <section class="row bg-primary-subtle text-dark rounded-3 elevation-5">
-        <div class="col-3">
+        <div class=" col-12 col-md-3 d-flex align-items-center">
             <img :src="comment.creator.picture" alt="comment.creator.name">
             <h6>{{ comment.creator.name }}</h6>
         </div>
-        <div class="col-9">
+        <div class="col-12 col-md-9">
             <p class="py-3">{{ comment.body }}</p>
         </div>
         <div v-if="isMyComment" class="col-12 text-end">

@@ -1,9 +1,9 @@
 <template>
     <section class="row">
-      <div class="col-4">
+      <div class="col-12 col-md-4">
         <img :src="activeEvent.coverImg" :alt="activeEvent.name" class="img-fluid">
       </div>
-      <div class="col-8">
+      <div class="col-12 col-md-8">
         <section v-if="(activeEvent.creatorId == accountId) && !activeEvent.isCanceled" class="row justify-content-end">
           <ModalWrapper id="edit-Event">
             <template #button>
@@ -20,7 +20,7 @@
           <button @click="cancelEvent" class="btn btn-danger col-3">Cancel Event</button>
         </section>
         <h4>{{ activeEvent.name }}</h4>
-        <h6>{{ activeEvent.location }}</h6>
+        <h6>Location: {{ activeEvent.location }}</h6>
         <p>{{ activeEvent.description }}</p>
         <section class="row justify-content-between">
           <div v-if="!activeEvent.isCanceled" class="col-6">
@@ -38,14 +38,14 @@
         </section>
       </div>
     </section>
-    <h5>See who's Attending</h5>
+    <h5 class="mt-3 text-center">Attendee's</h5>
     <section class="row bg-dark-subtle">
-      <div v-for="ticket in tickets" :key="ticket.id" class="col-1">
+      <div v-for="ticket in tickets" :key="ticket.id" class="col-2 col-md-1">
         <img :src="ticket.profile.picture" :alt="ticket.profile.name" :title="ticket.profile.name" class="profile-pic">
       </div>
     </section>
     <section class="row justify-content-center">
-      <CommentForm v-if="user.isAuthenticated && activeEvent.id" :eventId="activeEvent.id"/>
+      <CommentForm v-if="user.isAuthenticated && activeEvent.id" :eventId="activeEvent.id" class="my-4"/>
       <div v-for="comment in comments" :key="comment.id" class="col-10 my-2">
         <CommentCard :comment="comment"/>
       </div>
@@ -108,6 +108,7 @@ export default {
                 if (!AppState.user.isAuthenticated) return false;
                 if (AppState.activeEvent.isCanceled) return false;
                 if ((AppState.activeEvent.capacity - AppState.activeEvent.ticketCount) <= 0) return false;
+                if(!AppState.account.id) return false;
                 let noTicket = true;
                 AppState.tickets.forEach(ticket=>{
                   if(ticket.eventId == AppState.activeEvent.id) {
