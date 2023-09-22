@@ -53,6 +53,7 @@ setup(props) {
             const newEvent = await eventsService.createEvent(eventData.value)
             Pop.success('New Event Created')
             Modal.getOrCreateInstance('#create-Event').hide()
+            eventData.value = {}
             router.push({name: 'EventDetails', params: {eventId: newEvent.id}})
         } catch (error) {
             Pop.error(error)
@@ -63,6 +64,7 @@ setup(props) {
             const editedEvent = await eventsService.editEvent(props.activeEvent.id, eventData.value)
             Pop.success('Edited Event')
             Modal.getOrCreateInstance('#edit-Event').hide()
+            eventData.value = {}
         } catch (error) {
             Pop.error(error)
         }
