@@ -3,7 +3,6 @@
         <div @click="openDetails" class="col-11 p-0 event-cover d-flex align-items-end selectable">
            <div class="info px-2">
             <h5>{{ event.name }}</h5>
-            <h6>{{ event.location }}</h6>
             <section class="row"></section>
             <h6>{{ event.startDate }}</h6>
             <section v-if="event.isCanceled" class="row px-1">
@@ -66,11 +65,11 @@ setup(props) {
     border-top-right-radius: .5rem;
     width: 100%;
 }
-h5,
-h6{
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+// h5,
+// h6{
+//     text-wrap: nowrap;
+//     overflow: hidden;
+//     text-overflow: ellipsis; 
+//     line-height: 1.5;  
+// }
 </style>

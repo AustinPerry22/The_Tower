@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <form @submit.prevent="editOrCreate">
             <label for="title">Title:</label>
-            <input v-model="eventData.name" type="text" name="title" class="form-control" maxlength="50" :required="!editing">
+            <input v-model="eventData.name" type="text" name="title" class="form-control" maxlength="25" :required="!editing">
             <label for="description">Description:</label>
             <input v-model="eventData.description" type="text" name="description" class="form-control" maxlength="1000" :required="!editing">
             <label for="coverImg">Cover Image Url:</label>
