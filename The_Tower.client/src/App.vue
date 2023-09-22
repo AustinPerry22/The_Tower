@@ -1,12 +1,9 @@
 <template>
   <main class="container-fluid bg-dark">
     <section class="row">
-      <div class="col-11">
-        <h1>Tower</h1>
+      <Navigation/>
+      <div class="col-12">
         <router-view />
-      </div>
-      <div class="col-1 bg-primary-subtle">
-        <Navigation/>
       </div>
     </section>
   </main>
