@@ -109,10 +109,11 @@ export default {
                 if (AppState.activeEvent.isCanceled) return false;
                 if ((AppState.activeEvent.capacity - AppState.activeEvent.ticketCount) <= 0) return false;
                 let noTicket = true;
-                AppState.myTickets.forEach(ticket=>{
+                AppState.tickets.forEach(ticket=>{
                   if(ticket.eventId == AppState.activeEvent.id) {
-                    noTicket = false
-                  }
+                    if(ticket.accountId == AppState.account.id){
+                    noTicket = false;
+                  }}
                 })
                 return noTicket;
             }),

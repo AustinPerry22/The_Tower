@@ -12,8 +12,8 @@
                 </div>
             </section>
             <div v-else>
-                <section v-if="event.capacity > 0" class="row justify-content-end">
-                    <h6 class="text-end text-success">{{ event.capacity }} spots left</h6>
+                <section v-if="event.capacity - event.ticketCount > 0" class="row justify-content-end">
+                    <h6 class="text-end text-success">{{ event.capacity - event.ticketCount }} spots left</h6>
                 </section>
                 <section v-else class="row px-1">
                     <div class="col-12 rounded-top-2 bg-danger text-end">
