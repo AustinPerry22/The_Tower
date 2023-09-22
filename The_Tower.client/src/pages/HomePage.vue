@@ -9,14 +9,14 @@
         </div>
       </section>
       <section class="row text-center bg-primary mt-4 justify-content-evenly">
-        <button @click="eventType=''" class="btn btn-dark col-2">All</button>
-        <button @click="eventType='convention'" class="btn btn-dark col-2">Conventions</button>
-        <button @click="eventType='sport'" class="btn btn-dark col-2">Sports</button>
-        <button @click="eventType='digital'" class="btn btn-dark col-2">Digital</button>
-        <button @click="eventType='concert'" class="btn btn-dark col-2">Concerts</button>
+        <button @click="eventType=''" class="btn btn-dark col-6 col-md-2">All</button>
+        <button @click="eventType='convention'" class="btn btn-dark col-6 col-md-2">Conventions</button>
+        <button @click="eventType='sport'" class="btn btn-dark col-6 col-md-2">Sports</button>
+        <button @click="eventType='digital'" class="btn btn-dark col-6 col-md-2">Digital</button>
+        <button @click="eventType='concert'" class="btn btn-dark col-6 col-md-2">Concerts</button>
       </section>
       <section class="row justify-content-evenly">
-        <div v-for="event in events" :key="event.id" class="col-3 g-4  event-card">
+        <div v-for="event in events" :key="event.id" class="col-6 col-md-3 g-4  event-card">
           <EventCard :event="event"/>
         </div>
       </section>

@@ -1,7 +1,7 @@
 <template>
     <h2 class="text-center my-3">My Events</h2>
   <section class="row justify-content-evenly">
-      <div v-for="event in events" :key="event.id" class="col-3 g-4">
+      <div v-for="event in events" :key="event.id" class="col-6 col-md-3 g-4">
         <EventCard :event="event"/>
       </div>
     </section>
