@@ -42,7 +42,7 @@
     <section class="row bg-dark-subtle">
       <div v-for="ticket in tickets" :key="ticket.id" class="col-6 col-md-3 d-flex">
         <img :src="ticket.profile.picture" :alt="ticket.profile.name" :title="ticket.profile.name" class="profile-pic">
-        <p>{{ ticket.profile.name }}</p>
+        <p class="text-dark">{{ ticket.profile.name }}</p>
       </div>
     </section>
     <section class="row justify-content-center">
