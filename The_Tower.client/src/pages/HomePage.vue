@@ -2,10 +2,10 @@
   <section class="row justify-content-center">
     <div class="col-11">
       <section class="row justify-content-center">
-        <div class="col-12 justify-content-center" id="top-card">
-          <h3>Lorem ipsum dolor sit amet.</h3>
-          <h3>Lorem ipsum dolor sit amet, consectetur adipisicing.</h3>
-          <h3>Lorem ipsum dolor sit.</h3>
+        <div class="col-12 justify-content-center text-center d-flex flex-column" id="top-card">
+          <h3>Welcome To The Tower!</h3>
+          <h3>Find events to join.</h3>
+          <h3>Or create your own events.</h3>
         </div>
       </section>
       <section class="row text-center bg-primary mt-4 justify-content-evenly">
