@@ -2,13 +2,13 @@
   <section class="row justify-content-center">
     <div class="col-11">
       <section class="row justify-content-center">
-        <div class="col-12 justify-content-center text-center d-flex flex-column" id="top-card">
+        <div class="col-12 justify-content-center text-center d-flex flex-column text-light" id="top-card">
           <h3>Welcome To The Tower!</h3>
           <h3>Find events to join.</h3>
           <h3>Or create your own events.</h3>
         </div>
       </section>
-      <section class="row text-center bg-primary mt-4 justify-content-evenly">
+      <section class="row text-center rounded bg-black py-2 mt-4 justify-content-evenly">
         <button @click="eventType=''" class="btn btn-dark col-6 col-md-2">All</button>
         <button @click="eventType='convention'" class="btn btn-dark col-6 col-md-2">Conventions</button>
         <button @click="eventType='sport'" class="btn btn-dark col-6 col-md-2">Sports</button>
@@ -58,6 +58,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+h3{
+  filter: drop-shadow(.25rem .25rem .1rem black);
+}
 #top-card{
   background-image: url(https://images.unsplash.com/photo-1532621623813-d37d9cd1d992?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHNlYXRzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60);
   background-position: center;
@@ -73,5 +77,6 @@ export default {
 .event-card{
   border: .5rem rgb(32, 6, 75) solid .15em;
 }
+
 
 </style>
