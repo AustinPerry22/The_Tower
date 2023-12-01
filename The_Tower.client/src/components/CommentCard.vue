@@ -8,6 +8,7 @@
             <p class="py-3">{{ comment.body }}</p>
         </div>
         <div v-if="isMyComment" class="col-12 text-end">
+            test
             <button @click="deleteComment" class="btn btn-danger">delete</button>
         </div>
     </section>
