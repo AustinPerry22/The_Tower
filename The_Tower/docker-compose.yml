@@ -1,0 +1,10 @@
+version: "3"
+services:
+  app:
+    image: austinperry/the_tower:latest
+    restart: unless-stopped
+    env_file:
+      - the_tower-env
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
