@@ -1,6 +1,6 @@
 import Pop from "./Pop.js"
 
-const APP_NAME = "The_Tower.client"
+const APP_NAME = "Tower"
 
 export function saveState(key, value) {
   try {
