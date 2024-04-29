@@ -28,7 +28,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "$EC2_PEM_KEY" > ~/.ssh/id_rsa.pem
           chmod 600 ~/.ssh/id_rsa.pem
-          
+
       - name: Send Docker Compose 🐋
         run: |
           scp -i ~/.ssh/id_rsa.pem -o StrictHostKeyChecking=no -r server/docker-compose.yml $EC2_USERNAME@$EC2_IP_ADDRESS:~/$REPO_NAME-compose
