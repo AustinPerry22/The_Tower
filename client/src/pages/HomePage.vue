@@ -9,11 +9,11 @@
         </div>
       </section>
       <section class="row text-center rounded bg-black py-2 mt-4 justify-content-evenly">
-        <button @click="eventType=''" class="btn btn-dark col-6 col-md-2">All</button>
-        <button @click="eventType='convention'" class="btn btn-dark col-6 col-md-2">Conventions</button>
-        <button @click="eventType='sport'" class="btn btn-dark col-6 col-md-2">Sports</button>
-        <button @click="eventType='digital'" class="btn btn-dark col-6 col-md-2">Digital</button>
-        <button @click="eventType='concert'" class="btn btn-dark col-6 col-md-2">Concerts</button>
+        <button :disabled="eventType==''" @click="eventType=''" class="btn btn-dark col-6 col-md-2">All</button>
+        <button :disabled="eventType=='convention'" @click="eventType='convention'" class="btn btn-dark col-6 col-md-2">Conventions</button>
+        <button :disabled="eventType=='sport'" @click="eventType='sport'" class="btn btn-dark col-6 col-md-2">Sports</button>
+        <button :disabled="eventType=='digital'" @click="eventType='digital'" class="btn btn-dark col-6 col-md-2">Digital</button>
+        <button :disabled="eventType=='concert'" @click="eventType='concert'" class="btn btn-dark col-6 col-md-2">Concerts</button>
       </section>
       <section class="row justify-content-evenly">
         <div v-for="event in events" :key="event.id" class="col-6 col-md-3 g-4  event-card">
@@ -62,6 +62,11 @@ export default {
 h3{
   filter: drop-shadow(.25rem .25rem .1rem black);
 }
+
+button:disabled{
+  background-color: #087e39;
+}
+
 #top-card{
   background-image: url(https://images.unsplash.com/photo-1532621623813-d37d9cd1d992?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHNlYXRzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60);
   background-position: center;

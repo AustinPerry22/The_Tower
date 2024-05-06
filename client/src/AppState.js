@@ -24,6 +24,6 @@ export const AppState = reactive({
   myTickets: [],
 
   /**@type {Comment[]} */
-  comments: [],
+  comments: []
 
 })

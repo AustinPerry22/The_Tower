@@ -100,6 +100,13 @@ export default {
             Pop.error(error)
           }
         }
+
+        function isExpired(date){
+            const today = new Date()
+            const eventDate = new Date(date)
+            return eventDate < today
+          }
+
         return {
             activeEvent: computed(() => AppState.activeEvent),
             accountId: computed(() => AppState.account.id),
@@ -110,6 +117,8 @@ export default {
                 if (AppState.activeEvent.isCanceled) return false;
                 if ((AppState.activeEvent.capacity - AppState.activeEvent.ticketCount) <= 0) return false;
                 if(!AppState.account.id) return false;
+                let notExpired = isExpired(AppState.activeEvent.startDate)
+                if(notExpired) return false;
                 let noTicket = true;
                 AppState.tickets.forEach(ticket=>{
                   if(ticket.eventId == AppState.activeEvent.id) {
@@ -119,6 +128,8 @@ export default {
                 })
                 return noTicket;
             }),
+
+            
 
             tickets: computed(() => AppState.tickets),
             comments: computed(()=> AppState.comments),
