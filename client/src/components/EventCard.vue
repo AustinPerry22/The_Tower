@@ -5,20 +5,27 @@
             <h5>{{ event.name }}</h5>
             <section class="row"></section>
             <h6>{{ event.startDate }}</h6>
-            <section v-if="event.isCanceled" class="row px-1">
+            <section v-if="isExpired(event.startDate)" class="row px-1">
                 <div class="col-12 rounded-top-2 bg-danger text-end">
-                    <h6>Event Cancelled</h6>
+                    <h6>Expired</h6>
                 </div>
             </section>
             <div v-else>
-                <section v-if="event.capacity - event.ticketCount > 0" class="row justify-content-end">
-                    <h6 class="text-end text-success">{{ event.capacity - event.ticketCount }} spots left</h6>
-                </section>
-                <section v-else class="row px-1">
+                <section v-if="event.isCanceled" class="row px-1">
                     <div class="col-12 rounded-top-2 bg-danger text-end">
-                        <h6>Sold Out!</h6>
+                        <h6>Event Cancelled</h6>
                     </div>
-            </section>
+                </section>
+                <div v-else>
+                    <section v-if="event.capacity - event.ticketCount > 0" class="row justify-content-end">
+                        <h6 class="text-end text-success">{{ event.capacity - event.ticketCount }} spots left</h6>
+                    </section>
+                    <section v-else class="row px-1">
+                        <div class="col-12 rounded-top-2 bg-danger text-end">
+                            <h6>Sold Out!</h6>
+                        </div>
+                    </section>
+                </div>
             </div>
            </div>
         </div>
@@ -29,12 +36,19 @@
 import { computed } from 'vue';
 import { Event } from '../models/Event';
 import { router } from '../router';
+import { AppState } from '../AppState';
 
 export default {
 props: {event: {type: Event, required: true}},
 setup(props) {
   return {
     eventImg: computed(()=> `url('${props.event.coverImg}')`),
+
+    isExpired(date){
+        const today = new Date()
+        const eventDate = new Date(date)
+        return eventDate < today
+    },
 
     openDetails(){
         router.push({ name: 'EventDetails', params: { eventId: props.event.id } })
